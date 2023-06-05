@@ -1,4 +1,5 @@
-import fs from 'fs';
+// import fs from 'fs';
+// var fs = require('fs');
 import path from 'path';
 
 

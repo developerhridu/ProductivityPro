@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import axios from 'axios';
 
-const CreateTaskComponent = () => {
+const Create = () => {
     const [taskName, setTaskName] = useState('');
     const [taskCategory, setTaskCategory] = useState([]);
     const [taskStatus, setTaskStatus] = useState('');
@@ -211,4 +211,4 @@ const CreateTaskComponent = () => {
     );
 };
 
-export default CreateTaskComponent;
+export default Create;

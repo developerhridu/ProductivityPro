@@ -3,7 +3,8 @@ import{BrowserRouter as Router, Route,Routes} from 'react-router-dom'
 import HomePage from "./pages/HomePage"
 import LoginPage from "./pages/Login"
 import RegisterPage from "./pages/Register"
-import CreateTaskPage from "./pages/CreateTaskPage"
+import CreatePage from "./pages/CreatePage"
+import UpdatePage from "./pages/UpdatePage"
 
 
 class App extends Component {
@@ -15,7 +16,8 @@ class App extends Component {
                         <Route exact path="/" element={<HomePage/>}/>
                         <Route exact path="/login" element={<LoginPage/>}/>
                         <Route exact path='/register' element={<RegisterPage/>} />
-                        <Route exact path="/createTask" element={<CreateTaskPage/>}/>
+                        <Route exact path="/createTask" element={<CreatePage/>}/>
+                        <Route exact path="/updateTask" element={<UpdatePage/>}/>
                     </Routes>
                 </Router>
             </div>
