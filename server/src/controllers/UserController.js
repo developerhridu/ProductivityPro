@@ -55,3 +55,34 @@ exports.registerUser = (req, res) => {
         });
     });
 };
+
+
+exports.loginUser = (req, res) => {
+    // Extract data from the request body
+    const { email, password } = req.body;
+
+    // Validate form fields
+    if (!email || !password) {
+        return res.status(400).json({ error: 'Please fill in all fields.' });
+    }
+
+    // Read the existing data from the JSON file
+    fs.readFile(usersFilePath, 'utf8', (err, data) => {
+        if (err) {
+            console.error('Error reading data file:', err);
+            return res.status(500).json({ error: 'Internal server error.' });
+        }
+
+        // Parse the JSON data
+        const users = JSON.parse(data);
+
+        // Find the user with matching email and password
+        const user = users.find((user) => user.email === email && user.password === password);
+
+        if (!user) {
+            return res.status(401).json({ error: 'Invalid email or password.' });
+        }
+
+        return res.status(200).json({ message: 'Login successful!' });
+    });
+};
