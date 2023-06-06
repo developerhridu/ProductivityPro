@@ -1,52 +1,57 @@
-// import fs from 'fs';
-// var fs = require('fs');
-import path from 'path';
+const path = require('path');
+const fs = require('fs');
 
+const usersFilePath = path.join(__dirname, '../database/users.json');
 
-
-const usersFilePath = path.resolve(__dirname, '/user.json');
-
-export const registerUser = (req, res) => {
+exports.registerUser = (req, res) => {
+    // Extract data from the request body
     const { firstName, lastName, email, password } = req.body;
 
-    // Read existing user data from JSON file
-    let users = [];
-    try {
-        users = JSON.parse(fs.readFileSync(usersFilePath, 'utf8'));
-    } catch (error) {
-        console.error('Error reading user data from JSON file:', error);
+    // Validate form fields
+    if (!firstName || !lastName || !email || !password) {
+        return res.status(400).json({ error: 'Please fill in all fields.' });
     }
 
-    // Check if email already exists
-    const emailExists = users.some((user) => user.email === email);
-    if (emailExists) {
-        return res.status(400).json({ error: 'Email already exists. Please choose a different email.' });
+    // Validate email format using regex
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (!emailRegex.test(email)) {
+        return res.status(400).json({ error: 'Invalid email format.' });
     }
 
-    // Create user object
-    const user = {
-        id: generateID(),
-        firstName,
-        lastName,
-        email,
-        password,
-    };
+    // Read the existing data from the JSON file
+    fs.readFile(usersFilePath, 'utf8', (err, data) => {
+        if (err) {
+            console.error('Error reading data file:', err);
+            return res.status(500).json({ error: 'Internal server error.' });
+        }
 
-    // Add new user to the array
-    users.push(user);
+        // Parse the JSON data
+        const users = JSON.parse(data);
 
-    // Save updated user array to JSON file
-    try {
-        fs.writeFileSync(usersFilePath, JSON.stringify(users), 'utf8');
-        res.sendStatus(200);
-    } catch (error) {
-        console.error('Error writing user data to JSON file:', error);
-        res.status(500).json({ error: 'Registration failed. Please try again.' });
-    }
+        // Check if the user already exists
+        if (users.some((user) => user.email === email)) {
+            return res.status(400).json({ error: 'User already exists.' });
+        }
+
+        // Create a new user object
+        const newUser = {
+            firstName,
+            lastName,
+            email,
+            password,
+        };
+
+        // Add the new user to the array
+        users.push(newUser);
+
+        // Write the updated data back to the JSON file
+        fs.writeFile(usersFilePath, JSON.stringify(users), (err) => {
+            if (err) {
+                console.error('Error writing data file:', err);
+                return res.status(500).json({ error: 'Internal server error.' });
+            }
+
+            return res.status(200).json({ message: 'Registration successful!' });
+        });
+    });
 };
-
-// Helper function to generate a unique ID
-function generateID() {
-    return 'user_' + Math.random().toString(36).substr(2, 9);
-}
-
