@@ -1,12 +1,12 @@
 import React from 'react';
 import { Container, Row, Col, Form, Button } from 'react-bootstrap';
 
-const SearchTasks = () => (
+const Search = () => (
     <Container className="mt-3">
         <h4>Search Tasks</h4>
         <Form id="searchForm">
             <Row>
-                <Col md={2}>
+                <Col md={3}>
                     <Form.Group>
                         <Form.Label htmlFor="taskNameSearch">Task Name</Form.Label>
                         <Form.Control type="text" id="taskNameSearch" placeholder="Search By Name" />
@@ -47,7 +47,7 @@ const SearchTasks = () => (
                         <Form.Control type="date" id="endDateSearch" />
                     </Form.Group>
                 </Col>
-                <Col md={2}>
+                <Col md={1}>
                     <Form.Group>
                         <Form.Label htmlFor="endDateSearch" className="invisible">Search</Form.Label>
                         <Button type="submit" variant="primary" block>Search</Button>
@@ -58,4 +58,4 @@ const SearchTasks = () => (
     </Container>
 );
 
-export default SearchTasks;
+export default Search;
