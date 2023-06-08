@@ -65,3 +65,60 @@ exports.loginUser = (req, res) => {
     });
 };
 
+exports.userProfileDetails = (req, res) => {
+    const email = req.headers['email'];
+    if (!email) {
+        return res.status(400).json({ error: 'Email not provided in request headers.' });
+    }
+
+    fs.readFile(usersFilePath, 'utf8', (err, data) => {
+        if (err) {
+            console.error('Error reading data file:', err);
+            return res.status(500).json({ error: 'Internal server error.' });
+        }
+
+        const users = JSON.parse(data);
+        const user = users.find((user) => user.email === email);
+
+        if (!user) {
+            return res.status(404).json({ error: 'User not found.' });
+        }
+
+        return res.status(200).json({ user });
+    });
+};
+
+exports.userProfileUpdate = (req, res) => {
+    const email = req.headers['email'];
+    const reqBody = req.body;
+
+    if (!reqBody || Object.keys(reqBody).length === 0) {
+        return res.status(400).json({ error: 'Request body is empty.' });
+    }
+    fs.readFile(usersFilePath, 'utf8', (err, data) => {
+        if (err) {
+            console.error('Error reading data file:', err);
+            return res.status(500).json({ error: 'Internal server error.' });
+        }
+        const users = JSON.parse(data);
+        const userIndex = users.findIndex((user) => user.email === email);
+
+        if (userIndex === -1) {
+            return res.status(404).json({ error: 'User not found.' });
+        }
+
+        const updatedUser = { ...users[userIndex], ...reqBody };
+        users[userIndex] = updatedUser;
+
+        fs.writeFile(usersFilePath, JSON.stringify(users), (err) => {
+            if (err) {
+                console.error('Error writing data file:', err);
+                return res.status(500).json({ error: 'Internal server error.' });
+            }
+
+            return res.status(200).json({ message: 'Profile updated successfully!', user: updatedUser });
+        });
+    });
+};
+
+
