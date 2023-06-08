@@ -58,15 +58,10 @@ exports.registerUser = (req, res) => {
 
 
 exports.loginUser = (req, res) => {
-    // Extract data from the request body
     const { email, password } = req.body;
-
-    // Validate form fields
     if (!email || !password) {
         return res.status(400).json({ error: 'Please fill in all fields.' });
     }
-
-    // Read the existing data from the JSON file
     fs.readFile(usersFilePath, 'utf8', (err, data) => {
         if (err) {
             console.error('Error reading data file:', err);
