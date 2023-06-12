@@ -1,7 +1,7 @@
 const path = require('path');
 const fs = require('fs');
 
-const taskFilePath = path.join(__dirname, '../database/tasks.json');
+// const taskFilePath = path.join(__dirname, '../database/tasks.json');
 const usersFilePath = path.join(__dirname, '../database/users.json');
 
 exports.addTask = (req, res) => {
@@ -28,19 +28,12 @@ exports.addTask = (req, res) => {
         const user = users[userIndex];
         const { tasks } = user;
 
-        // Generate a new task ID
         const newTaskId = tasks.length > 0 ? tasks[tasks.length - 1].id + 1 : 1;
-
-        // Create a new task object
         const newTask = {
             id: newTaskId,
             ...reqBody,
         };
-
-        // Add the new task to the user's tasks array
         tasks.push(newTask);
-
-        // Update the user's tasks array
         users[userIndex].tasks = tasks;
 
         fs.writeFile(usersFilePath, JSON.stringify(users), (err) => {

@@ -13,14 +13,14 @@ module.exports = (req, res, next) => {
             return res.status(401).json({ status: 'unauthorized' });
         }
 
-        const email = decoded.email;
+        const userID = decoded.userID;
 
-        if (!email) {
+        if (!userID) {
             return res.status(401).json({ status: 'unauthorized' });
         }
 
-        console.log(email);
-        req.headers.email = email;
+        console.log(userID);
+        req.headers.userID = userID;
 
         next();
     });

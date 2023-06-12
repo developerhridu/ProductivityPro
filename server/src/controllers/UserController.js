@@ -1,6 +1,7 @@
 const path = require('path');
 const fs = require('fs');
 const jwt = require("jsonwebtoken");
+const { v4: uuidv4 } = require('uuid');
 
 const usersFilePath = path.join(__dirname, '../database/users.json');
 
@@ -23,6 +24,7 @@ exports.registerUser = (req, res) => {
             return res.status(400).json({ error: 'User already exists.' });
         }
         const newUser = {
+            userID: uuidv4(),
             firstName,
             lastName,
             email,
@@ -40,6 +42,8 @@ exports.registerUser = (req, res) => {
     });
 };
 
+
+
 exports.loginUser = (req, res) => {
     const { email, password } = req.body;
     if (!email || !password) {
@@ -56,7 +60,7 @@ exports.loginUser = (req, res) => {
         if (!user) {
             return res.status(401).json({ error: 'Invalid email or password.' });
         }
-        const payload = { email: user.email };
+        const payload = { userID: user.userID };
         const token = jwt.sign(payload, 'SecretKey123456789', { expiresIn: '24h' });
 
         return res.status(200).json({ message: 'Login successful!', token });
@@ -64,9 +68,9 @@ exports.loginUser = (req, res) => {
 };
 
 exports.userProfileDetails = (req, res) => {
-    const email = req.headers['email'];
-    if (!email) {
-        return res.status(400).json({ error: 'Email not provided in request headers.' });
+    const userID = req.headers['userID'];
+    if (!userID) {
+        return res.status(400).json({ error: 'Not a Registered User' });
     }
 
     fs.readFile(usersFilePath, 'utf8', (err, data) => {
@@ -76,7 +80,7 @@ exports.userProfileDetails = (req, res) => {
         }
 
         const users = JSON.parse(data);
-        const user = users.find((user) => user.email === email);
+        const user = users.find((user) => user.userID === userID);
 
         if (!user) {
             return res.status(404).json({ error: 'User not found.' });
@@ -87,7 +91,7 @@ exports.userProfileDetails = (req, res) => {
 };
 
 exports.userProfileUpdate = (req, res) => {
-    const email = req.headers['email'];
+    const userID = req.headers['userID'];
     const reqBody = req.body;
 
     if (!reqBody || Object.keys(reqBody).length === 0) {
@@ -99,7 +103,7 @@ exports.userProfileUpdate = (req, res) => {
             return res.status(500).json({ error: 'Internal server error.' });
         }
         const users = JSON.parse(data);
-        const userIndex = users.findIndex((user) => user.email === email);
+        const userIndex = users.findIndex((user) => user.userID === userID);
 
         if (userIndex === -1) {
             return res.status(404).json({ error: 'User not found.' });
