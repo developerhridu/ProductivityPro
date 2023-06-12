@@ -45,6 +45,7 @@ exports.updateTask = (req, res) => {
     const userID = req.headers['userID'];
     const taskID = req.params.taskID;
     const reqBody = req.body;
+    console.log("Hello update")
 
     if (!reqBody || Object.keys(reqBody).length === 0) {
         return res.status(400).json({ error: 'Request body is empty.' });
@@ -57,12 +58,13 @@ exports.updateTask = (req, res) => {
         }
 
         const tasks = JSON.parse(data);
+        console.log(`Data : `,data)
         // const taskIndex = tasks.findIndex((task) => task.taskID === taskID);
-        const taskIndex = tasks.findIndex((task) => task.taskID === String(taskID));
+        const taskIndex = tasks.findIndex((task) => task.taskID == taskID);
 
 
         if (taskIndex === -1) {
-            return res.status(404).json({ error: 'Task not found.' });
+            return res.status(405).json({ error: 'Task not found.' });
         }
 
         const updatedTask = {
