@@ -1,1 +1,9 @@
-[{"userID":"16b2a412-8d27-4d2e-af8a-dbdd8a84329d","firstName":"Mizanur Rahman","lastName":"Hridu","email":"hridu@gmail.com","password":"hridu"}]
+[
+  {
+    "userID": "16b2a412-8d27-4d2e-af8a-dbdd8a84329d",
+    "firstName": "Mizanur Rahman",
+    "lastName": "Hridu",
+    "email": "hridu@gmail.com",
+    "password": "hridu"
+  }
+]
