@@ -8,38 +8,38 @@ const taskFilePath = path.join(__dirname, '../database/todo.json');
 
 
 exports.addTask = (req, res) => {
-    const userID = req.headers['userID'];
-    const reqBody = req.body;
+        const userID = req.headers['userID'];
+        const reqBody = req.body;
 
-    if (!reqBody || Object.keys(reqBody).length === 0) {
-        return res.status(400).json({ error: 'Request body is empty.' });
-    }
-
-    const newTask = {
-        taskID: uuidv4(),
-        userID,
-        ...reqBody,
-    };
-
-    fs.readFile(taskFilePath, 'utf8', (err, data) => {
-        if (err) {
-            console.error('Error reading task data file:', err);
-            return res.status(500).json({ error: 'Internal server error.' });
+        if (!reqBody || Object.keys(reqBody).length === 0) {
+            return res.status(400).json({ error: 'Request body is empty.' });
         }
 
-        const tasks = JSON.parse(data);
-        tasks.push(newTask);
+        const newTask = {
+            taskID: uuidv4(),
+            userID,
+            ...reqBody,
+        };
 
-        fs.writeFile(taskFilePath, JSON.stringify(tasks), (err) => {
+        fs.readFile(taskFilePath, 'utf8', (err, data) => {
             if (err) {
-                console.error('Error writing task data file:', err);
+                console.error('Error reading task data file:', err);
                 return res.status(500).json({ error: 'Internal server error.' });
             }
 
-            return res.status(200).json({ message: 'Task created successfully!', task: newTask });
+            const tasks = JSON.parse(data);
+            tasks.push(newTask);
+
+            fs.writeFile(taskFilePath, JSON.stringify(tasks), (err) => {
+                if (err) {
+                    console.error('Error writing task data file:', err);
+                    return res.status(500).json({ error: 'Internal server error.' });
+                }
+
+                return res.status(200).json({ message: 'Task created successfully!', task: newTask });
+            });
         });
-    });
-};
+    };
 
 exports.updateTask = (req, res) => {
     const userID = req.headers['userID'];
@@ -59,7 +59,6 @@ exports.updateTask = (req, res) => {
 
         const tasks = JSON.parse(data);
         console.log(`Data : `,data)
-        // const taskIndex = tasks.findIndex((task) => task.taskID === taskID);
         const taskIndex = tasks.findIndex((task) => task.taskID == taskID);
 
 
@@ -85,5 +84,53 @@ exports.updateTask = (req, res) => {
         });
     });
 };
+
+exports.readAllTasks = (req, res) => {
+    const userID = req.headers['userID'];
+
+    fs.readFile(taskFilePath, 'utf8', (err, data) => {
+        if (err) {
+            console.error('Error reading task data file:', err);
+            return res.status(500).json({ error: 'Internal server error.' });
+        }
+
+        const tasks = JSON.parse(data);
+        const userTasks = tasks.filter((task) => task.userID === userID);
+
+        return res.status(200).json({ tasks: userTasks });
+    });
+};
+
+exports.deleteTask = (req, res) => {
+    const userID = req.headers['userID'];
+    const taskID = req.params.taskID;
+
+    fs.readFile(taskFilePath, 'utf8', (err, data) => {
+        if (err) {
+            console.error('Error reading task data file:', err);
+            return res.status(500).json({ error: 'Internal server error.' });
+        }
+
+        let tasks = JSON.parse(data);
+        const taskIndex = tasks.findIndex((task) => task.taskID == taskID);
+
+        if (taskIndex === -1) {
+            return res.status(404).json({ error: 'Task not found.' });
+        }
+
+        tasks = tasks.filter((task) => task.taskID !== taskID);
+
+        fs.writeFile(taskFilePath, JSON.stringify(tasks), (err) => {
+            if (err) {
+                console.error('Error writing task data file:', err);
+                return res.status(500).json({ error: 'Internal server error.' });
+            }
+
+            return res.status(200).json({ message: 'Task deleted successfully!' });
+        });
+    });
+};
+
+
 
 

@@ -5,5 +5,12 @@
     "lastName": "Hridu",
     "email": "hridu@gmail.com",
     "password": "hridu"
+  },
+  {
+    "userID": "cf77fa50-9ded-41ad-a9b4-ba34081fea17",
+    "firstName": "Md",
+    "lastName": "Kamrul",
+    "email": "kamrul@gmail.com",
+    "password": "hridu"
   }
 ]

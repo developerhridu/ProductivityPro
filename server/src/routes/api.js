@@ -14,6 +14,9 @@ router.post("/profileUpdate", AuthVerifyMiddleware, UserController.userProfileUp
 // Tasks Routes
 router.post("/addTask", AuthVerifyMiddleware, TaskController.addTask);
 router.put("/updateTask/:taskID", AuthVerifyMiddleware, TaskController.updateTask);
+router.get("/readAllTask", AuthVerifyMiddleware, TaskController.readAllTasks);
+router.delete("/deleteTask/:taskID", AuthVerifyMiddleware, TaskController.deleteTask);
+
 
 
 module.exports=router;
