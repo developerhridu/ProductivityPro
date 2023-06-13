@@ -102,8 +102,8 @@ exports.readAllTasks = (req, res) => {
 };
 
 exports.deleteTask = (req, res) => {
-    const userID = req.headers['userID'];
-    const taskID = req.params.taskID;
+    // const userID = req.headers['userID'];
+    const taskID = req.body.taskID;
 
     fs.readFile(taskFilePath, 'utf8', (err, data) => {
         if (err) {
@@ -130,6 +130,35 @@ exports.deleteTask = (req, res) => {
         });
     });
 };
+
+exports.deleteMultipleTasks = (req, res) => {
+    console.log("Hridu M");
+    const taskIDs = req.body.taskIDs;
+
+    fs.readFile(taskFilePath, 'utf8', (err, data) => {
+        if (err) {
+            console.error('Error reading task data file:', err);
+            return res.status(500).json({ error: 'Internal server error.' });
+        }
+
+        let tasks = JSON.parse(data);
+        const filteredTasks = tasks.filter((task) => !taskIDs.includes(task.taskID));
+
+        if (filteredTasks.length == tasks.length) {
+            return res.status(404).json({ error: 'Tasks not found.' });
+        }
+
+        fs.writeFile(taskFilePath, JSON.stringify(filteredTasks), (err) => {
+            if (err) {
+                console.error('Error writing task data file:', err);
+                return res.status(500).json({ error: 'Internal server error.' });
+            }
+
+            return res.status(200).json({ message: 'Tasks deleted successfully!' });
+        });
+    });
+};
+
 
 
 
