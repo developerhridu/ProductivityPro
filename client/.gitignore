@@ -23,3 +23,9 @@ yarn-debug.log*
 yarn-error.log*
 .idea
 .idea*
+.idea/
+.DS_Store
+/.idea
+./DS_Store/
+.DS_Store
+

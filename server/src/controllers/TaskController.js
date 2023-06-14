@@ -159,6 +159,40 @@ exports.deleteMultipleTasks = (req, res) => {
     });
 };
 
+exports.searchTasks = (req, res) => {
+    const searchCriteria = req.body;
+
+    fs.readFile(taskFilePath, 'utf8', (err, data) => {
+        if (err) {
+            console.error('Error reading task data file:', err);
+            return res.status(500).json({ error: 'Internal server error.' });
+        }
+        const tasks = JSON.parse(data);
+        const filteredTasks = tasks.filter((task) => {
+            if (searchCriteria.taskName && !task.taskName.toLowerCase().includes(searchCriteria.taskName.toLowerCase())) {
+                return false;
+            }
+            if (searchCriteria.taskCategories && searchCriteria.taskCategories.length > 0 && !searchCriteria.taskCategories.includes(task.taskCategory)) {
+                return false;
+            }
+            if (searchCriteria.taskStatus && task.taskStatus !== searchCriteria.taskStatus) {
+                return false;
+            }
+            if (searchCriteria.responsiblePerson && task.responsiblePerson !== searchCriteria.responsiblePerson) {
+                return false;
+            }
+            if (searchCriteria.endDate && new Date(task.endDate) > new Date(searchCriteria.endDate)) {
+                return false;
+            }
+
+            return true;
+        });
+
+        return res.status(200).json({ tasks: filteredTasks });
+    });
+};
+
+
 
 
 

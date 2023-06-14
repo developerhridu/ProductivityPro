@@ -17,6 +17,8 @@ router.put("/updateTask/:taskID", AuthVerifyMiddleware, TaskController.updateTas
 router.get("/readAllTask", AuthVerifyMiddleware, TaskController.readAllTasks);
 router.delete("/deleteTask/:taskID", AuthVerifyMiddleware, TaskController.deleteTask);
 router.delete("/deleteMultipleTasks", AuthVerifyMiddleware, TaskController.deleteMultipleTasks);
+router.post("/searchTasks", AuthVerifyMiddleware, TaskController.searchTasks);
+
 
 
 

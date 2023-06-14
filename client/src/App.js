@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import{BrowserRouter as Router, Route,Routes} from 'react-router-dom'
+import { ToastContainer, ToastProvider } from 'react-hot-toast';
 import HomePage from "./pages/HomePage"
 import LoginPage from "./pages/Login"
 import RegisterPage from "./pages/Register"
@@ -10,6 +11,7 @@ import UpdatePage from "./pages/UpdatePage"
 class App extends Component {
     render() {
         return (
+
             <div>
                 <Router>
                     <Routes>
