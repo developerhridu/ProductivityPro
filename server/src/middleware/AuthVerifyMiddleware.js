@@ -19,7 +19,7 @@ module.exports = (req, res, next) => {
             return res.status(401).json({ status: 'unauthorized' });
         }
 
-        console.log(userID);
+        // console.log(userID);
         req.headers.userID = userID;
 
         next();

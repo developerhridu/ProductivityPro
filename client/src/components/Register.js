@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import axios from 'axios';
+import { RegisterRequest } from '../APIRequest/APIRequest';
 
-const RegisterPage = () => {
+const Register = () => {
     const navigate = useNavigate();
     const [firstName, setFirstName] = useState('');
     const [lastName, setLastName] = useState('');
@@ -12,8 +12,6 @@ const RegisterPage = () => {
 
     const handleSubmit = async (event) => {
         event.preventDefault();
-
-        // Validate form fields
         if (!firstName || !lastName || !email || !password) {
             alert('Please fill in all fields.');
             return;
@@ -27,27 +25,23 @@ const RegisterPage = () => {
         }
 
         try {
-            // Make a POST request to save user data in JSON file
-            await axios.post('/api/register', {
-                firstName,
-                lastName,
-                email,
-                password,
-            });
+            // Make a POST request to save user data
+            const success = await RegisterRequest(firstName, lastName, email, password);
 
-            // Reset form fields
-            setFirstName('');
-            setLastName('');
-            setEmail('');
-            setPassword('');
+            if (success) {
+                setFirstName('');
+                setLastName('');
+                setEmail('');
+                setPassword('');
 
-            alert('Registration successful!');
-            navigate('/login'); // Navigate to login page
+                // navigate('/login');
+            }
         } catch (error) {
             console.error('Error:', error);
             alert('Registration failed. Please try again.');
         }
     };
+
 
     return (
         <div className="container mt-8 col-xl-6">
@@ -111,4 +105,4 @@ const RegisterPage = () => {
     );
 };
 
-export default RegisterPage;
+export default Register;

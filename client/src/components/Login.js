@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { Toaster } from 'react-hot-toast';
-import { SuccessToast, ErrorToast, IsEmail } from "../helpers/FormHelper";
-import { LoginRequest } from "../APIRequest/APIRequest";
+import toast, { Toaster } from 'react-hot-toast';
+import { SuccessToast, ErrorToast, IsEmail } from '../helpers/FormHelper';
+import { LoginRequest } from '../APIRequest/APIRequest';
 
 const LoginPage = () => {
     const navigate = useNavigate();
@@ -12,12 +12,12 @@ const LoginPage = () => {
     const handleSubmit = async (event) => {
         event.preventDefault();
         if (!email || !password) {
-            alert('Please fill in all fields.');
+            ErrorToast('Please fill in all fields.');
             return;
         }
 
-        if (IsEmail(email)) {
-            ErrorToast("Invalid Email Address");
+        if (!IsEmail(email)) {
+            ErrorToast('Invalid Email Address');
             return;
         }
 
@@ -25,15 +25,15 @@ const LoginPage = () => {
             const success = await LoginRequest(email, password);
 
             if (success) {
-                SuccessToast('Login Success');
-                navigate('/');
+                // SuccessToast('LoginPage Success');
+                window.location.href = '/';
             } else {
                 ErrorToast('Email not found. Please sign up first.');
-                navigate('/register');
+                // navigate('/register');
             }
         } catch (error) {
             console.error('Error:', error);
-            ErrorToast('Login failed. Please try again.');
+            ErrorToast('LoginPage failed. Please try again.');
         }
     };
 
@@ -66,14 +66,15 @@ const LoginPage = () => {
                     />
                 </div>
 
-                <button type="submit" className="btn btn-primary">Login</button>
+                <button type="submit" className="btn btn-primary">
+                    Login
+                </button>
                 <button type="button" className="btn btn-secondary" onClick={() => navigate('/register')}>
                     Register
                 </button>
             </form>
-            <Toaster />
+            <Toaster position="top-center" />
         </div>
-
     );
 };
 

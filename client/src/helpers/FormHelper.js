@@ -7,8 +7,11 @@ class FormHelper {
 
     IsEmail(value) {
         const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-        return !emailRegex.test(value);
+        const isValid = emailRegex.test(value);
+        console.log(`Email: ${value}, isValid: ${isValid}`);
+        return isValid;
     }
+
 
     ErrorToast(message = 'An error occurred') {
         toast.error(message, { position: 'top-center' });

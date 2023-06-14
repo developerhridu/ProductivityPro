@@ -12,5 +12,12 @@
     "lastName": "Kamrul",
     "email": "kamrul@gmail.com",
     "password": "hridu"
+  },
+  {
+    "userID": "295d4ba2-3e5f-4381-9d61-90d92a00005d",
+    "firstName": "Md",
+    "lastName": "Awwab",
+    "email": "awwab@gmail.com",
+    "password": "hridu"
   }
 ]

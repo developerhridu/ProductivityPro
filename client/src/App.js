@@ -1,30 +1,40 @@
-import React, { Component } from 'react';
-import{BrowserRouter as Router, Route,Routes} from 'react-router-dom'
-import { ToastContainer, ToastProvider } from 'react-hot-toast';
-import HomePage from "./pages/HomePage"
-import LoginPage from "./pages/Login"
-import RegisterPage from "./pages/Register"
-import CreatePage from "./pages/CreatePage"
-import UpdatePage from "./pages/UpdatePage"
+import React from 'react';
+import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
+import HomePage from "./pages/HomePage";
+import LoginPage from "./components/Login";
+import Register from "./components/Register";
+import CreatePage from "./pages/CreatePage";
+import UpdatePage from "./pages/UpdatePage";
+import { getToken, setToken, setUserDetails } from "./helpers/SessionHelper";
+import NotFound from "./pages/NotFound";
 
-
-class App extends Component {
-    render() {
+const App = () => {
+    if (getToken()) {
         return (
-
             <div>
                 <Router>
                     <Routes>
-                        <Route exact path="/" element={<HomePage/>}/>
-                        <Route exact path="/login" element={<LoginPage/>}/>
-                        <Route exact path='/register' element={<RegisterPage/>} />
-                        <Route exact path="/createTask" element={<CreatePage/>}/>
-                        <Route exact path="/updateTask" element={<UpdatePage/>}/>
+                        <Route path="/" element={<HomePage />} />
+                        <Route path="/createTask" element={<CreatePage />} />
+                        <Route path="/updateTask" element={<UpdatePage />} />
+                        <Route path="*" element={<NotFound />} />
+                    </Routes>
+                </Router>
+            </div>
+        );
+    } else {
+        return (
+            <div>
+                <Router>
+                    <Routes>
+                        <Route path="/login" element={<LoginPage />} />
+                        <Route path="/register" element={<Register />} />
+                        <Route path="*" element={<LoginPage />} />
                     </Routes>
                 </Router>
             </div>
         );
     }
-}
+};
 
 export default App;
