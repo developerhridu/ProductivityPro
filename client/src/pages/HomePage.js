@@ -9,7 +9,7 @@ const HomePage = () => {
         <div>
             <Navbar/>
             <div className="container mt-3">
-                <h3>To Do</h3>
+                <h3>All Tasks</h3>
                 <Search/>
                 <TaskTable/>
             </div>

@@ -1,27 +1,28 @@
 import React from 'react';
 import { Navbar, Container, Nav } from 'react-bootstrap';
-import { NavLink } from 'react-router-dom';
+import { NavLink, useNavigate } from 'react-router-dom';
 import logo from '../assets/img/todo.png';
 import '../assets/css/CustomNavbar.css';
 import {removeSessions} from "../helpers/SessionHelper";
 
 const CustomNavbar = () => {
+    const navigate = useNavigate();
 
     return (
         <Navbar bg="light" expand="lg">
             <Container>
-                <Navbar.Brand>
+                <NavLink to="/" exact className="navbar-brand" onClick={() => navigate('/')}>
                     <img className="nav-logo" src={logo} alt="Add Task Icon" />
-                    ToDo App
-                </Navbar.Brand>
+                    ProductivityPro
+                </NavLink>
                 <Navbar.Toggle aria-controls="basic-navbar-nav" />
                 <Navbar.Collapse id="basic-navbar-nav">
                     <Nav className="mr-auto">
                         <Nav.Link as={NavLink} to="/" exact>
-                            All List
+                            All Tasks
                         </Nav.Link>
                         <Nav.Link as={NavLink} to="/createTask">
-                            Add ToDo
+                            Add Task
                         </Nav.Link>
                         <Nav.Link as={NavLink} to="/userProfile">
                             User Profile
