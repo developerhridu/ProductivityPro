@@ -59,5 +59,27 @@
     "userID": "16b2a412-8d27-4d2e-af8a-dbdd8a84329d",
     "taskName": "H 6",
     "taskStatus": "Completed"
+  },
+  {
+    "taskID": "979448b7-ff27-4f1c-9f9f-a65fad2b0f2c",
+    "userID": "16b2a412-8d27-4d2e-af8a-dbdd8a84329d",
+    "taskName": "Test",
+    "taskCategory": ["Work-related", "Personal"],
+    "taskStatus": "Completed",
+    "taskDescription": "test",
+    "responsiblePerson": "",
+    "startDate": "2023-06-12",
+    "endDate": "2023-06-19"
+  },
+  {
+    "taskID": "4b234b6d-23ae-4f5d-97fa-a00a56725076",
+    "userID": "16b2a412-8d27-4d2e-af8a-dbdd8a84329d",
+    "taskName": "Test 2",
+    "taskCategory": ["Academic", "Personal", "Work-related"],
+    "taskStatus": "In Progress",
+    "taskDescription": "sgdadag",
+    "responsiblePerson": "Hridu",
+    "startDate": "2023-06-12",
+    "endDate": "2023-06-29"
   }
 ]

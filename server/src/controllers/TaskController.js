@@ -193,6 +193,30 @@ exports.searchTasks = (req, res) => {
 };
 
 
+exports.getTaskByTaskID = (req, res) => {
+    const taskID = req.params.taskID;
+    console.log("Received taskID:", taskID);
+  
+    fs.readFile(taskFilePath, 'utf8', (err, data) => {
+      if (err) {
+        console.error('Error reading task data file:', err);
+        return res.status(500).json({ error: 'Internal server error.' });
+      }
+  
+      let tasks = JSON.parse(data);
+      const task = tasks.find((task) => task.taskID === taskID);
+  
+      if (!task) {
+        return res.status(404).json({ error: 'Task not found.' });
+      }
+  
+      return res.status(200).json(task);
+    });
+  };
+  
+  
+
+
 
 
 

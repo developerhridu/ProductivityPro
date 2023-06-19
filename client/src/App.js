@@ -7,6 +7,7 @@ import CreatePage from "./pages/CreatePage";
 import UpdatePage from "./pages/UpdatePage";
 import { getToken, setToken, setUserDetails } from "./helpers/SessionHelper";
 import NotFound from "./pages/NotFound";
+import ProfilePage from "./pages/ProfilePage";
 
 const App = () => {
     if (getToken()) {
@@ -16,7 +17,9 @@ const App = () => {
                     <Routes>
                         <Route path="/" element={<HomePage />} />
                         <Route path="/createTask" element={<CreatePage />} />
-                        <Route path="/updateTask" element={<UpdatePage />} />
+                        <Route path="/userProfile" element={<ProfilePage />} />
+                        {/*<Route path="/updateTask" element={<UpdatePage />} />*/}
+                        <Route path="/updatePage/:taskID" element={<UpdatePage />} />
                         <Route path="*" element={<NotFound />} />
                     </Routes>
                 </Router>

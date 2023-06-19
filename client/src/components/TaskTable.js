@@ -1,8 +1,10 @@
 import React, { useState, useEffect } from 'react';
-import { ReadTaskRequest } from '../APIRequest/APIRequest';
+import { useNavigate } from 'react-router-dom';
+import { ReadTaskRequest, DeleteTaskRequest } from '../APIRequest/APIRequest';
 
 const TaskTable = () => {
     const [tasks, setTasks] = useState([]);
+    const navigate = useNavigate();
 
     useEffect(() => {
         fetchTasks();
@@ -17,41 +19,23 @@ const TaskTable = () => {
         }
     };
 
-    useEffect(() => {
-        populateTable(tasks);
-    }, [tasks]);
-
-    const populateTable = (tasksToDisplay) => {
-        const tableBody = document.getElementById('taskTableBody');
-        tableBody.innerHTML = '';
-
-        tasksToDisplay.forEach((task) => {
-            const row = document.createElement('tr');
-            row.innerHTML = `
-      <td><input type="checkbox" value="" /></td>
-      <td>${task.taskName || ''}</td>
-      <td>${task.taskCategory || ''}</td>
-      <td>${task.taskStatus || ''}</td>
-      <td>${task.taskDescription || ''}</td>
-      <td>${task.responsiblePerson || ''}</td>
-      <td>${task.startDate || ''}</td>
-      <td>${task.endDate || ''}</td>
-      <td>
-        <button class="btn btn-primary btn-sm" onclick="">
-          <i class="fas fa-edit"></i>Edit
-        </button>
-      </td>
-      <td>
-        <button class="btn btn-danger btn-sm" onclick="">
-          <i class="fas fa-trash"></i>Delete
-        </button>
-      </td>
-    `;
-
-            tableBody.appendChild(row);
-        });
+    const handleEditClick = (taskID) => {
+        navigate(`/updatePage/${taskID}`);
     };
 
+    const handleDeleteClick = async (taskID) => {
+        try {
+            const success = await DeleteTaskRequest(taskID);
+            if (success) {
+                console.log('Task deleted successfully!');
+                setTasks(tasks.filter((task) => task.taskID !== taskID));
+            } else {
+                console.log('Failed to delete task.');
+            }
+        } catch (error) {
+            console.log('Error deleting task:', error);
+        }
+    };
 
     return (
         <div>
@@ -73,7 +57,30 @@ const TaskTable = () => {
                                 <th></th>
                             </tr>
                             </thead>
-                            <tbody id="taskTableBody"></tbody>
+                            <tbody>
+                            {tasks.map((task) => (
+                                <tr key={task.taskID}>
+                                    <td><input type="checkbox" value="" /></td>
+                                    <td>{task.taskName || ''}</td>
+                                    <td>{task.taskCategory || ''}</td>
+                                    <td>{task.taskStatus || ''}</td>
+                                    <td>{task.taskDescription || ''}</td>
+                                    <td>{task.responsiblePerson || ''}</td>
+                                    <td>{task.startDate || ''}</td>
+                                    <td>{task.endDate || ''}</td>
+                                    <td>
+                                        <button className="btn btn-primary btn-sm" onClick={() => handleEditClick(task.taskID)}>
+                                            <i className="fas fa-edit"></i>Edit
+                                        </button>
+                                    </td>
+                                    <td>
+                                        <button className="btn btn-danger btn-sm" onClick={() => handleDeleteClick(task.taskID)}>
+                                            <i className="fas fa-trash"></i>Delete
+                                        </button>
+                                    </td>
+                                </tr>
+                            ))}
+                            </tbody>
                         </table>
                     </div>
                 </div>
