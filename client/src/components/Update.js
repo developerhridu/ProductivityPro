@@ -3,9 +3,8 @@ import { useParams } from 'react-router-dom';
 import { GetTaskRequest, UpdateTaskRequest } from '../APIRequest/APIRequest';
 import TaskForm from "./TaskForm";
 
-
 const Update = () => {
-    const {taskID}  = useParams();
+    const { taskID } = useParams();
     const [taskName, setTaskName] = useState('');
     const [taskCategory, setTaskCategory] = useState([]);
     const [taskStatus, setTaskStatus] = useState('');
@@ -13,13 +12,11 @@ const Update = () => {
     const [responsiblePerson, setResponsiblePerson] = useState('');
     const [startDate, setStartDate] = useState('');
     const [endDate, setEndDate] = useState('');
-    // console.log("Hridu Test", taskID);
+
     useEffect(() => {
         const fetchTask = async () => {
             try {
                 const task = await GetTaskRequest(taskID);
-                console.log("Hridu Test", task);
-                // Set the retrieved task values to the state
                 setTaskName(task.name);
                 setTaskCategory(task.category);
                 setTaskStatus(task.status);
@@ -38,8 +35,19 @@ const Update = () => {
     const handleSubmit = async (event) => {
         event.preventDefault();
 
+        // Join taskCategory array with commas
+        const taskCategoryString = taskCategory.join(", ");
+
         try {
-            const success = await UpdateTaskRequest(taskID, taskName, taskCategory, taskStatus, taskDescription, responsiblePerson, startDate, endDate
+            const success = await UpdateTaskRequest(
+                taskID,
+                taskName,
+                taskCategoryString,
+                taskStatus,
+                taskDescription,
+                responsiblePerson,
+                startDate,
+                endDate
             );
 
             if (success) {
@@ -55,7 +63,22 @@ const Update = () => {
     return (
         <div className="container mt-5 col-xl-6">
             <h1>Update Task</h1>
-            <TaskForm handleSubmit={handleSubmit} taskName={taskName} setTaskName={setTaskName} taskCategory={taskCategory} setTaskCategory={setTaskCategory} taskStatus={taskStatus} setTaskStatus={setTaskStatus} taskDescription={taskDescription} setTaskDescription={setTaskDescription} responsiblePerson={responsiblePerson} setResponsiblePerson={setResponsiblePerson} startDate={startDate} setStartDate={setStartDate} endDate={endDate} setEndDate={setEndDate}
+            <TaskForm
+                handleSubmit={handleSubmit}
+                taskName={taskName}
+                setTaskName={setTaskName}
+                taskCategory={taskCategory}
+                setTaskCategory={setTaskCategory}
+                taskStatus={taskStatus}
+                setTaskStatus={setTaskStatus}
+                taskDescription={taskDescription}
+                setTaskDescription={setTaskDescription}
+                responsiblePerson={responsiblePerson}
+                setResponsiblePerson={setResponsiblePerson}
+                startDate={startDate}
+                setStartDate={setStartDate}
+                endDate={endDate}
+                setEndDate={setEndDate}
             />
         </div>
     );

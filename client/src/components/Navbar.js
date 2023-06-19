@@ -1,24 +1,22 @@
 import React from 'react';
 import { Navbar, Container, Nav } from 'react-bootstrap';
 import { NavLink } from 'react-router-dom';
-import logo from '../assets/img/todo.png'
+import logo from '../assets/img/todo.png';
 import '../assets/css/CustomNavbar.css';
+import {removeSessions} from "../helpers/SessionHelper";
 
 const CustomNavbar = () => {
-    // const AppNavBar = () => {
-    //     const logout = () => {
-    //         // Your logout logic here
-    //     };
+
     return (
         <Navbar bg="light" expand="lg">
             <Container>
-                {/*<Navbar.Brand className="navbar-brand">*/}
-                {/*    <img className="nav-logo" src={logo} alt="Add Task Icon" />*/}
-                {/*    ToDo App*/}
-                {/*</Navbar.Brand>*/}
+                <Navbar.Brand>
+                    <img className="nav-logo" src={logo} alt="Add Task Icon" />
+                    ToDo App
+                </Navbar.Brand>
                 <Navbar.Toggle aria-controls="basic-navbar-nav" />
                 <Navbar.Collapse id="basic-navbar-nav">
-                    <Nav className="">
+                    <Nav className="mr-auto">
                         <Nav.Link as={NavLink} to="/" exact>
                             All List
                         </Nav.Link>
@@ -29,9 +27,9 @@ const CustomNavbar = () => {
                             User Profile
                         </Nav.Link>
                     </Nav>
-                    {/*<button className="btn btn-primary" onClick={logout}>*/}
-                    {/*    Logout*/}
-                    {/*</button>*/}
+                    <button className="btn btn-primary my-lg-0 ms-auto" onClick={removeSessions}>
+                        Logout
+                    </button>
                 </Navbar.Collapse>
             </Container>
         </Navbar>

@@ -4,7 +4,7 @@ import TaskForm from "./TaskForm";
 
 const Create = () => {
     const [taskName, setTaskName] = useState('');
-    const [taskCategory, setTaskCategory] = useState('');
+    const [taskCategory, setTaskCategory] = useState([]);
     const [taskStatus, setTaskStatus] = useState('');
     const [taskDescription, setTaskDescription] = useState('');
     const [responsiblePerson, setResponsiblePerson] = useState('');
@@ -23,14 +23,27 @@ const Create = () => {
 
         setTaskCategory(updatedCategories);
     };
+    const resetForm = () => {
+        setTaskName('');
+        setTaskCategory([]);
+        setTaskStatus('');
+        setTaskDescription('');
+        setResponsiblePerson('');
+        setStartDate('');
+        setEndDate('');
+    };
+
 
     const handleSubmit = async (event) => {
         event.preventDefault();
 
+        // Join taskCategory array with commas
+        const taskCategoryString = taskCategory.join(", ");
+
         try {
             const success = await AddTaskRequest(
                 taskName,
-                taskCategory,
+                taskCategoryString,
                 taskStatus,
                 taskDescription,
                 responsiblePerson,
@@ -39,9 +52,11 @@ const Create = () => {
             );
 
             if (success) {
-                // alert('Task created successfully!');
+                // Task creation successful
+                resetForm();
+
             } else {
-                // alert('Task creation failed.');
+                // Task creation failed
             }
         } catch (error) {
             console.error('Error creating task:', error);
@@ -67,8 +82,8 @@ const Create = () => {
                 setStartDate={setStartDate}
                 endDate={endDate}
                 setEndDate={setEndDate}
+                handleCategoryChange={handleCategoryChange} // Pass the handleCategoryChange function to TaskForm
             />
-
         </div>
     );
 };

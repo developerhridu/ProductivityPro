@@ -1,7 +1,23 @@
 import React, { useState } from 'react';
 import { AddTaskRequest } from '../APIRequest/APIRequest';
 
-const TaskForm = ({ handleSubmit, taskName, setTaskName, taskCategory, setTaskCategory, taskStatus, setTaskStatus, taskDescription, setTaskDescription, responsiblePerson, setResponsiblePerson, startDate, setStartDate, endDate, setEndDate }) => {
+const TaskForm = ({
+                      handleSubmit,
+                      taskName,
+                      setTaskName,
+                      taskCategory,
+                      setTaskCategory,
+                      taskStatus,
+                      setTaskStatus,
+                      taskDescription,
+                      setTaskDescription,
+                      responsiblePerson,
+                      setResponsiblePerson,
+                      startDate,
+                      setStartDate,
+                      endDate,
+                      setEndDate,
+                  }) => {
     const handleCategoryChange = (event) => {
         const { value, checked } = event.target;
         let updatedCategories = [...taskCategory];
@@ -37,7 +53,6 @@ const TaskForm = ({ handleSubmit, taskName, setTaskName, taskCategory, setTaskCa
                         id="workRelated"
                         name="taskCategory"
                         value="Work-related"
-                        // checked={taskCategory.includes('Work-related')}
                         onChange={handleCategoryChange}
                     />
                     <label className="form-check-label" htmlFor="workRelated">
@@ -51,7 +66,6 @@ const TaskForm = ({ handleSubmit, taskName, setTaskName, taskCategory, setTaskCa
                         id="personal"
                         name="taskCategory"
                         value="Personal"
-                        // checked={taskCategory.includes('Personal')}
                         onChange={handleCategoryChange}
                     />
                     <label className="form-check-label" htmlFor="personal">
@@ -65,7 +79,6 @@ const TaskForm = ({ handleSubmit, taskName, setTaskName, taskCategory, setTaskCa
                         id="academic"
                         name="taskCategory"
                         value="Academic"
-                        // checked={taskCategory.includes('Academic')}
                         onChange={handleCategoryChange}
                     />
                     <label className="form-check-label" htmlFor="academic">
@@ -144,26 +157,26 @@ const TaskForm = ({ handleSubmit, taskName, setTaskName, taskCategory, setTaskCa
                     <option value="Azhar">Azhar</option>
                 </select>
             </div>
-            <div className="form-group">
-                <label htmlFor="startDate">Start Date:</label>
-                <input
-                    type="date"
-                    className="form-control"
-                    id="startDate"
-                    value={startDate}
-                    onChange={(e) => setStartDate(e.target.value)}
-                />
-            </div>
-            <div className="form-group">
-                <label htmlFor="endDate">End Date:</label>
-                <input
-                    type="date"
-                    className="form-control"
-                    id="endDate"
-                    value={endDate}
-                    onChange={(e) => setEndDate(e.target.value)}
-                />
-            </div>
+            {/*<div className="form-group">*/}
+            {/*    <label htmlFor="startDate">Start Date:</label>*/}
+            {/*    <input*/}
+            {/*        type="date"*/}
+            {/*        className="form-control"*/}
+            {/*        id="startDate"*/}
+            {/*        value={startDate}*/}
+            {/*        onChange={(e) => setStartDate(e.target.value)}*/}
+            {/*    />*/}
+            {/*</div>*/}
+            {/*<div className="form-group">*/}
+            {/*    <label htmlFor="endDate">End Date:</label>*/}
+            {/*    <input*/}
+            {/*        type="date"*/}
+            {/*        className="form-control"*/}
+            {/*        id="endDate"*/}
+            {/*        value={endDate}*/}
+            {/*        onChange={(e) => setEndDate(e.target.value)}*/}
+            {/*    />*/}
+            {/*</div>*/}
             <button type="submit" className="btn btn-primary" id="submitButton">
                 Submit
             </button>
