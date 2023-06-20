@@ -21,11 +21,11 @@ A powerful task management web app built with ReactJS and ExpressJS. This applic
 To install and run ProductivityPro locally, follow these steps:
 
 1. Clone the repository.
-2. Install the required dependencies using the following command:
+2. Install the required dependencies using the following command: ```shell npm install```
 3. Start the development server:
-  npm start
+   ```shell npm start```
 4. Open the web app in your browser at http://localhost:3000.
-
+  
 ## Usage
 
 Sign up for a new account or log in with your existing credentials.
