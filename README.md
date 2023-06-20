@@ -4,7 +4,6 @@ A powerful task management web app built with ReactJS and ExpressJS. This applic
 
 <img width="1435" alt="image" src="https://github.com/developerhridu/ProductivityPro/assets/72350795/eae48266-0ec2-4f39-8843-3db3527d3820">
 
-
 ## Table of Contents
 
 - [Installation](#installation)
@@ -21,11 +20,20 @@ A powerful task management web app built with ReactJS and ExpressJS. This applic
 To install and run ProductivityPro locally, follow these steps:
 
 1. Clone the repository.
-2. Install the required dependencies using the following command: ```shell npm install```
+2. Install the required dependencies using the following command:
+
+```sh
+npm install
+```
+
 3. Start the development server:
-   ```shell npm start```
+
+```sh
+npm start
+```
+
 4. Open the web app in your browser at http://localhost:3000.
-  
+
 ## Usage
 
 Sign up for a new account or log in with your existing credentials.
@@ -47,6 +55,7 @@ Integration with Redux for state management.
 Integration with various third-party packages, including React Bootstrap, React Table, Recharts, and more.
 
 ## Postman API Documentation
+
 https://documenter.getpostman.com/view/24273931/2s93sZ5DrB#ddd21287-b82f-47fd-8578-f261046ea73f
 
 ## Support and Contact
