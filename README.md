@@ -10,7 +10,7 @@ A powerful task management web app built with ReactJS and ExpressJS. This applic
 - [Installation](#installation)
 - [Usage](#usage)
 - [Features](#features)
-- [Documentation](#documentation)
+- [Postman API Documentation](#postman-api-documentation)
 - [Support and Contact](#support-and-contact)
 - [Roadmap or Future Development](#roadmap-or-future-development)
 - [Changelog](#changelog)
