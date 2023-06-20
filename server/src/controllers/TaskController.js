@@ -87,19 +87,42 @@ exports.updateTask = (req, res) => {
 
 exports.readAllTasks = (req, res) => {
     const userID = req.headers['userID'];
-
+    const page = parseInt(req.params.page);
+    console.log("Page Number is ", page);
+    const itemsPerPage = 5;
+    if (isNaN(page)) 
+    {
+        page = 1;
+    }
+    
+    console.log("Page Number is ", page);
+  
     fs.readFile(taskFilePath, 'utf8', (err, data) => {
-        if (err) {
-            console.error('Error reading task data file:', err);
-            return res.status(500).json({ error: 'Internal server error.' });
-        }
-
-        const tasks = JSON.parse(data);
-        const userTasks = tasks.filter((task) => task.userID === userID);
-
-        return res.status(200).json({ tasks: userTasks });
+      if (err) {
+        console.error('Error reading task data file:', err);
+        return res.status(500).json({ error: 'Internal server error.' });
+      }
+  
+      const tasks = JSON.parse(data);
+      const userTasks = tasks.filter((task) => task.userID === userID);
+  
+      const totalTasks = userTasks.length;
+      console.log("Total Number of Task : ", totalTasks);
+      const totalPages = Math.ceil(totalTasks / itemsPerPage);
+  
+      const startIndex = (page - 1) * itemsPerPage;
+      const endIndex = startIndex + itemsPerPage;
+      const paginatedTasks = userTasks.slice(startIndex, endIndex);
+  
+      return res.status(200).json({
+        tasks: paginatedTasks,
+        currentPage: page,
+        totalPages: totalPages,
+      });
     });
-};
+  };
+  
+  
 
 exports.deleteTask = (req, res) => {
     // const userID = req.headers['userID'];
@@ -215,9 +238,32 @@ exports.getTaskByTaskID = (req, res) => {
   };
   
   
-
-
-
-
-
-
+  exports.pagination = (req, res) => {
+    const userID = req.headers['userID'];
+    const page = parseInt(req.query.page) || 1;
+    const itemsPerPage = 5;
+  
+    fs.readFile(taskFilePath, 'utf8', (err, data) => {
+      if (err) {
+        console.error('Error reading task data file:', err);
+        return res.status(500).json({ error: 'Internal server error.' });
+      }
+  
+      const tasks = JSON.parse(data);
+      const userTasks = tasks.filter((task) => task.userID === userID);
+  
+      const totalTasks = userTasks.length;
+      const totalPages = Math.ceil(totalTasks / itemsPerPage);
+  
+      const startIndex = (page - 1) * itemsPerPage;
+      const endIndex = startIndex + itemsPerPage;
+      const paginatedTasks = userTasks.slice(startIndex, endIndex);
+  
+      return res.status(200).json({
+        tasks: paginatedTasks,
+        currentPage: page,
+        totalPages: totalPages,
+      });
+    });
+  };
+  

@@ -16,6 +16,7 @@ const App = () => {
                 <Router>
                     <Routes>
                         <Route path="/" element={<HomePage />} />
+                        <Route path="/:page" element={<HomePage />} />
                         <Route path="/createTask" element={<CreatePage />} />
                         <Route path="/userProfile" element={<ProfilePage />} />
                         {/*<Route path="/updateTask" element={<UpdatePage />} />*/}

@@ -14,13 +14,11 @@ router.post("/profileUpdate", AuthVerifyMiddleware, UserController.userProfileUp
 // Tasks Routes
 router.post("/addTask", AuthVerifyMiddleware, TaskController.addTask);
 router.put("/updateTask/:taskID", AuthVerifyMiddleware, TaskController.updateTask);
-router.get("/readAllTask", AuthVerifyMiddleware, TaskController.readAllTasks);
+router.get("/readAllTask/:page", AuthVerifyMiddleware, TaskController.readAllTasks);
 router.delete("/deleteTask/:taskID", AuthVerifyMiddleware, TaskController.deleteTask);
 router.delete("/deleteMultipleTasks", AuthVerifyMiddleware, TaskController.deleteMultipleTasks);
 router.post("/searchTasks", AuthVerifyMiddleware, TaskController.searchTasks);
 router.get("/getTask/:taskID", TaskController.getTaskByTaskID);
-
-
 
 
 

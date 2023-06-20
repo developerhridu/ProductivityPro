@@ -49,24 +49,39 @@ export async function RegisterRequest(firstName, lastName, email, password) {
 }
 
 
-
-export async function ReadTaskRequest() {
-    const URL = baseURL+"/readAllTask";
+export async function ReadTaskRequest(page) {
+    if (isNaN(page))
+    {
+        page = 1;
+    }
+    const URL = baseURL + '/readAllTask/' + page;
+    // const URL = `${baseURL}/readAllTask/${page}`;
+    console.log(URL);
 
     try {
         const response = await axios.get(URL, AxiosHeader);
 
         if (response.status === 200) {
-            const { tasks } = response.data;
-            return tasks;
+            const { tasks, currentPage, totalPages } = response.data;
+
+            return {
+                tasks,
+                currentPage,
+                totalPages,
+            };
         } else {
             throw new Error('Error fetching tasks');
         }
     } catch (error) {
         console.error('Error:', error);
-        throw error;
+        throw new Error('Internal server error');
     }
 }
+
+
+
+
+
 
 export async function UserProfileRequest() {
     const URL = baseURL+"/profileDetails";
