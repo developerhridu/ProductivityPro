@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { ReadTaskRequest } from '../APIRequest/APIRequest';
+import { ReadTaskRequest } from '../APIs/APIRequest';
 
 const TaskTable = () => {
     const [tasks, setTasks] = useState([]);

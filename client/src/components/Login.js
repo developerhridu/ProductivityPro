@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import toast, { Toaster } from 'react-hot-toast';
 import { SuccessToast, ErrorToast, IsEmail } from '../helpers/FormHelper';
-import { LoginRequest } from '../APIRequest/APIRequest';
+import { LoginRequest } from '../APIs/APIRequest';
 
 const LoginPage = () => {
     const navigate = useNavigate();

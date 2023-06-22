@@ -267,3 +267,65 @@ exports.getTaskByTaskID = (req, res) => {
     });
   };
   
+
+
+  exports.getTasks = (req, res) => {
+    const userID = req.headers['userID'];
+    const page = parseInt(req.params.page);
+    const searchCriteria = req.body;
+  
+    console.log("Page Number is ", page);
+    const itemsPerPage = 5;
+    if (isNaN(page)) {
+      page = 1;
+    }
+  
+    console.log("Page Number is ", page);
+  
+    fs.readFile(taskFilePath, 'utf8', (err, data) => {
+      if (err) {
+        console.error('Error reading task data file:', err);
+        return res.status(500).json({ error: 'Internal server error.' });
+      }
+  
+      const tasks = JSON.parse(data);
+      let filteredTasks = tasks.filter((task) => task.userID === userID);
+  
+      if (searchCriteria) {
+        filteredTasks = filteredTasks.filter((task) => {
+          if (searchCriteria.taskName && !task.taskName.toLowerCase().includes(searchCriteria.taskName.toLowerCase())) {
+            return false;
+          }
+          if (searchCriteria.taskCategories && searchCriteria.taskCategories.length > 0 && !searchCriteria.taskCategories.includes(task.taskCategory)) {
+            return false;
+          }
+          if (searchCriteria.taskStatus && task.taskStatus !== searchCriteria.taskStatus) {
+            return false;
+          }
+          if (searchCriteria.responsiblePerson && task.responsiblePerson !== searchCriteria.responsiblePerson) {
+            return false;
+          }
+          if (searchCriteria.endDate && new Date(task.endDate) > new Date(searchCriteria.endDate)) {
+            return false;
+          }
+  
+          return true;
+        });
+      }
+  
+      const totalTasks = filteredTasks.length;
+      console.log("Total Number of Task : ", totalTasks);
+      const totalPages = Math.ceil(totalTasks / itemsPerPage);
+  
+      const startIndex = (page - 1) * itemsPerPage;
+      const endIndex = startIndex + itemsPerPage;
+      const paginatedTasks = filteredTasks.slice(startIndex, endIndex);
+  
+      return res.status(200).json({
+        tasks: paginatedTasks,
+        currentPage: page,
+        totalPages: totalPages,
+      });
+    });
+  };
+  

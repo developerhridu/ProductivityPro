@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { RegisterRequest } from '../APIRequest/APIRequest';
+import { RegisterRequest } from '../APIs/APIRequest';
 
 const Register = () => {
     const navigate = useNavigate();

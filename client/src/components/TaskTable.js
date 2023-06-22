@@ -1,8 +1,8 @@
-import React, { useState, useEffect } from 'react';
-import {useNavigate, useParams} from 'react-router-dom';
-import { Table, Button } from 'react-bootstrap';
-import { ReadTaskRequest, DeleteTaskRequest } from '../APIRequest/APIRequest';
+import React, { useEffect, useState } from 'react';
+import { Button, Table } from 'react-bootstrap';
 import ReactPaginate from "react-paginate";
+import { useNavigate, useParams } from 'react-router-dom';
+import { DeleteTaskRequest, ReadTaskRequest } from '../APIs/APIRequest';
 
 const TaskTable = () => {
     const { page } = useParams();
@@ -18,11 +18,11 @@ const TaskTable = () => {
     const fetchTasks = async (page) => {
         try {
             const tasksResponse = await ReadTaskRequest(page);
-            const { tasks, totalPages, currentPage } = tasksResponse;
-            console.log("Front End Page Details: " + currentPage, totalPages);
+            const { currentPage, tasks, totalPages } = tasksResponse;
             setTasks(tasks);
             setTotalPages(totalPages);
             setCurrentPage(currentPage);
+            console.log(`currentPage: ${currentPage}, totalPages: ${totalPages}`);
         } catch (error) {
             console.log('Error fetching tasks:', error);
         }

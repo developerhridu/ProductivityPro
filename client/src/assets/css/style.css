@@ -74,3 +74,6 @@ body{
     word-wrap: break-word;
 }
 
+.table td, .table th {
+    white-space: normal;
+}

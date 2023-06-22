@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
-import { GetTaskRequest, UpdateTaskRequest } from '../APIRequest/APIRequest';
+import { GetTaskRequest, UpdateTaskRequest } from '../APIs/APIRequest';
 import TaskForm from "./TaskForm";
 
 const Update = () => {

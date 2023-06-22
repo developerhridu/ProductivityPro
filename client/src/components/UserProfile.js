@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { UserProfileRequest } from '../APIRequest/APIRequest';
+import { UserProfileRequest } from '../APIs/APIRequest';
 
 const UserProfile = () => {
     const [userProfile, setUserProfile] = useState(null);

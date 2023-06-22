@@ -1,6 +1,5 @@
 import axios from "axios";
-import {SuccessToast, ErrorToast } from "../helpers/FormHelper";
-import { getToken, setToken, setUserDetails } from "../helpers/SessionHelper";
+import { getToken, setToken } from "../helpers/SessionHelper";
 
 
 const baseURL = "http://localhost:5000/api/v1";
@@ -54,7 +53,7 @@ export async function ReadTaskRequest(page) {
     {
         page = 1;
     }
-    const URL = baseURL + '/readAllTask/' + page;
+    const URL = baseURL + '/getTasks/' + page;
     // const URL = `${baseURL}/readAllTask/${page}`;
     console.log(URL);
 
