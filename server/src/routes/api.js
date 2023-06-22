@@ -12,9 +12,10 @@ router.post("/profileUpdate", AuthVerifyMiddleware, UserController.userProfileUp
 // Tasks Routes
 router.post("/addTask", AuthVerifyMiddleware, TaskController.addTask);
 router.put("/updateTask/:taskID", AuthVerifyMiddleware, TaskController.updateTask);
-router.get("/getTasks/:page", AuthVerifyMiddleware, TaskController.getTasks);
-router.delete("/deleteTask/:taskID", AuthVerifyMiddleware, TaskController.deleteTask);
+// router.get("/getTasks/:page", AuthVerifyMiddleware, TaskController.getAllTasks);
+router.get("/getTasks", AuthVerifyMiddleware, TaskController.getAllTasks);
+router.delete("/deleteTask", AuthVerifyMiddleware, TaskController.deleteTask);
 router.delete("/deleteMultipleTasks", AuthVerifyMiddleware, TaskController.deleteMultipleTasks);
 router.post("/searchTasks", AuthVerifyMiddleware, TaskController.searchTasks);
-router.get("/getTask/:taskID", TaskController.getTaskByTaskID);
+// router.get("/getTask/:taskID", TaskController.getTaskByTaskID);
 module.exports=router;

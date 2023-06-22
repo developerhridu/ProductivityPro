@@ -1,6 +1,6 @@
 import React from 'react';
 import Navbar from "../components/Navbar";
-import TaskTable from "../components/TaskTable";
+import ListTable from "../components/ListTable";
 import Search from "../components/Search";
 
 
@@ -11,7 +11,7 @@ const HomePage = () => {
             <div className="container mt-3">
                 <h3>All Tasks</h3>
                 <Search/>
-                <TaskTable/>
+                <ListTable/>
             </div>
 
 

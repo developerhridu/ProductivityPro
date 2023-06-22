@@ -1,5 +1,7 @@
 import axios from "axios";
 import { getToken, setToken } from "../helpers/SessionHelper";
+import FullScreenLoader from "../components/FullScreenLoader";
+import React from "react";
 
 
 const baseURL = "http://localhost:5000/api/v1";
@@ -48,26 +50,14 @@ export async function RegisterRequest(firstName, lastName, email, password) {
 }
 
 
-export async function ReadTaskRequest(page) {
-    if (isNaN(page))
-    {
-        page = 1;
-    }
-    const URL = baseURL + '/getTasks/' + page;
-    // const URL = `${baseURL}/readAllTask/${page}`;
-    console.log(URL);
-
+export async function ReadTaskRequest() {
+    const URL = baseURL+"/getTasks";
     try {
         const response = await axios.get(URL, AxiosHeader);
 
         if (response.status === 200) {
-            const { tasks, currentPage, totalPages } = response.data;
-
-            return {
-                tasks,
-                currentPage,
-                totalPages,
-            };
+            const { tasks } = response.data;
+            return tasks;
         } else {
             throw new Error('Error fetching tasks');
         }
@@ -76,12 +66,6 @@ export async function ReadTaskRequest(page) {
         throw new Error('Internal server error');
     }
 }
-
-
-
-
-
-
 export async function UserProfileRequest() {
     const URL = baseURL+"/profileDetails";
     try {
@@ -97,8 +81,6 @@ export async function UserProfileRequest() {
         console.error('Error:', error);
         throw error;
     }
-
-
 }
 
 export async function AddTaskRequest( taskName, taskCategory, taskStatus, taskDescription, responsiblePerson, startDate, endDate  ) {
