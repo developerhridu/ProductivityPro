@@ -87,7 +87,8 @@ exports.updateTask = (req, res) => {
 
 exports.getAllTasks = (req, res) => {
     const userID = req.headers['userID'];
-    console.log("User ID: " + userID);
+    debugger;
+    // console.log("User ID: " + userID);
 
     fs.readFile(taskFilePath, 'utf8', (err, data) => {
         if (err) {
@@ -97,7 +98,7 @@ exports.getAllTasks = (req, res) => {
 
         const tasks = JSON.parse(data);
         const userTasks = tasks.filter((task) => task.userID == userID);
-        console.log("user tasks: " + userTasks);
+        // console.log("user tasks: " + userTasks);
 
         return res.status(200).json({tasks: userTasks});
     });

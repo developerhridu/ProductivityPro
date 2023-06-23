@@ -5,7 +5,7 @@ import { DeleteTaskRequest, ReadTaskRequest } from '../APIs/APIRequest';
 import FullScreenLoader from './FullScreenLoader';
 import Pagination from './Pagination';
 
-let PageSize = 2;
+let PageSize = 5;
 const ListTable = () => {
     const [currentPage, setCurrentPage] = useState(1);
     const [tasks, setTasks] = useState([]);

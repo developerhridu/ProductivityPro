@@ -110,7 +110,7 @@ body {
 }
 
 .pagination-container .pagination-item.selected {
-  background-color: rgba(0, 0, 0, 0.08);
+  background-color: #FFCA2B;
 }
 
 .pagination-container .pagination-item .arrow::before {
